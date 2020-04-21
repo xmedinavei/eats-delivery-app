@@ -142,5 +142,5 @@ ADMINS = [
 ]
 MANAGERS = ADMINS
 
-
+# Users & Auhtentication
 AUTH_USER_MODEL = 'users.User'

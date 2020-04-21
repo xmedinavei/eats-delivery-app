@@ -3,3 +3,6 @@ eatsapp/__pycache__/urls.cpython-37.pyc
 eatsapp/__pycache__/settings.cpython-37.pyc
 eatsapp/__pycache__/__init__.cpython-37.pyc
 __pycache__
+users/migrations/0003_auto_20200421_2157.py
+users/migrations/0002_auto_20200421_2154.py
+users/migrations/0001_initial.py

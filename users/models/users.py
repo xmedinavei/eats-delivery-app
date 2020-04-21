@@ -35,14 +35,16 @@ class User(AbstractUser):
     CUSTOMER = 'CU'
     STORE = 'ST'
     RIDER = 'RD'
-    USER_KIND_CHOICES = [
+    ADMIN = 'AD'
+    TYPE_USER_CHOICES = [
         (CUSTOMER, 'customer'),
         (STORE, 'store'),
         (RIDER, 'rider'),
+        (ADMIN, 'admin'),
     ]
-    user_kind = models.CharField(
+    type_user = models.CharField(
         max_length=2,
-        choices=USER_KIND_CHOICES,
+        choices=TYPE_USER_CHOICES,
         default=CUSTOMER,
     )
 
@@ -64,4 +66,4 @@ class User(AbstractUser):
     # Method in Abstract User
     def get_short_name(self):
         '''Return username.'''
-        return self.username
+        return self.first_name
