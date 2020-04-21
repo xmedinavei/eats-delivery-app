@@ -9,10 +9,9 @@ from .users import User
 
 
 class Rider(models.Model):
-    '''Store model.
+    '''Rider model.
 
-    A profile holds a user's public data like biography, picture,
-    and statistics.
+    Rider profile hold user's public data: picture and stats.
     '''
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -21,7 +20,7 @@ class Rider(models.Model):
 
     picture = models.ImageField(
         'profile picture',
-        upload_to='users/pictures/',
+        upload_to='users/riders/pictures/',
         blank=True,
         null=True
     )

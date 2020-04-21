@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# URLs
+ROOT_URLCONF = 'eatsapp.urls'
 
 # Application definition
 

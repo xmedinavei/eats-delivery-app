@@ -1,4 +1,4 @@
-'''Client model.'''
+'''Customer model.'''
 
 # Django
 from django.db import models
@@ -7,17 +7,17 @@ from django.db import models
 from .users import User
 
 
-class Client(models.Model):
-    '''Client model.
+class Customer(models.Model):
+    '''Customer model.
 
-    Client profile hold user's public data: picture, bio and stats.
+    Customer profile hold user's public data: picture and stats.
     '''
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     picture = models.ImageField(
         'profile picture',
-        upload_to='users/pictures/',
+        upload_to='users/customers/pictures/',
         blank=True,
         null=True
     )

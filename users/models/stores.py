@@ -10,8 +10,7 @@ from .users import User
 class Store(models.Model):
     '''Store model.
 
-    A profile holds a user's public data like biography, picture,
-    and statistics.
+    Store profile hold user's public data: picture and stats.
     '''
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -19,7 +18,7 @@ class Store(models.Model):
 
     picture = models.ImageField(
         'profile picture',
-        upload_to='users/pictures/',
+        upload_to='users/stores/pictures/',
         blank=True,
         null=True
     )
