@@ -59,12 +59,18 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'eatsapp.urls'
 
+# Media
+MEDIA_ROOT = str(APPS_DIR('media'))
+MEDIA_URL = '/media/'
+
+# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
+            'debug': DEBUG,
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -126,3 +132,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+
+# Admin
+ADMIN_URL = 'admin/'
+ADMINS = [
+    ("""Xavier Medina""", 'xmedinavei@gmail.com'),
+]
+MANAGERS = ADMINS
