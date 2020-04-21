@@ -4,15 +4,18 @@
 from django.db import models
 from django.core.validators import RegexValidator
 
+# Local
+from .users import User
 
-class Rider:
+
+class Rider(models.Model):
     '''Store model.
 
     A profile holds a user's public data like biography, picture,
     and statistics.
     '''
 
-    user = models.OneToOneField('users.User', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     store_about = models.CharField(max_length=200)
 
@@ -32,7 +35,7 @@ class Rider:
         message="Motorcicle  licence plate must be entered in the format: AA111A"
     )
     rider_vehicle_licence_plate = models.CharField(
-        validators=[licence_plate_regex], min_length=6, max_length=6,
+        validators=[licence_plate_regex], max_length=6,
     )
 
     rider_address = models.TextField(max_length=200, blank=True)

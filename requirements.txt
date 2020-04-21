@@ -1,3 +1,5 @@
+Pillow==6.2.0
+
 # Django
 django>=3.0
 

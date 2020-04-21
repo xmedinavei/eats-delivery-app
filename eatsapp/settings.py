@@ -42,7 +42,7 @@ THIRD_PARTY_APPS = [
 
 ]
 LOCAL_APPS = [
-    'eatsapp.users.app.UsersAppConfig',
+    'users.apps.UsersAppConfig',
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'eatsapp.urls'
+
 
 # # Media
 # MEDIA_ROOT = str(APPS_DIR('media'))
@@ -141,3 +141,6 @@ ADMINS = [
     ("""Xavier Medina""", 'xmedinavei@gmail.com'),
 ]
 MANAGERS = ADMINS
+
+
+AUTH_USER_MODEL = 'users.User'

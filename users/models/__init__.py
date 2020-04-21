@@ -1,4 +1,4 @@
 from .users import *
-from .customer import *
-from .store import *
-from .rider import *
+from .customers import *
+from .stores import *
+from .riders import *

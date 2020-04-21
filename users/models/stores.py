@@ -3,16 +3,18 @@
 # Django
 from django.db import models
 
+# Local
+from .users import User
 
 
-class Store:
+class Store(models.Model):
     '''Store model.
 
     A profile holds a user's public data like biography, picture,
     and statistics.
     '''
 
-    user = models.OneToOneField('users.User', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
     picture = models.ImageField(

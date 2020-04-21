@@ -3,14 +3,17 @@
 # Django
 from django.db import models
 
+# Local
+from .users import User
 
-class Client:
+
+class Client(models.Model):
     '''Client model.
 
     Client profile hold user's public data: picture, bio and stats.
     '''
 
-    user = models.OneToOneField('users.User', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     picture = models.ImageField(
         'profile picture',

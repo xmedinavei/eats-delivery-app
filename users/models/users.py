@@ -28,21 +28,28 @@ class User(AbstractUser):
         message="Phone number must be entered in the format: +593987654321 or 0987654321. Up to 12 digits allowed."
     )
     phone_number = models.CharField(
-        validators=[phone_regex], min_length=10, max_length=13,
+        validators=[phone_regex], max_length=13,
+    )
+
+    # Kind of user
+    CUSTOMER = 'CU'
+    STORE = 'ST'
+    RIDER = 'RD'
+    USER_KIND_CHOICES = [
+        (CUSTOMER, 'customer'),
+        (STORE, 'store'),
+        (RIDER, 'rider'),
+    ]
+    user_kind = models.CharField(
+        max_length=2,
+        choices=USER_KIND_CHOICES,
+        default=CUSTOMER,
     )
 
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'phone_number']
 
-    # is_client = models.BooleanField(
-    #     'client',
-    #     default=False,  # Por default no está verificado
-    #     help_text=(
-    #         'Help easily distinguish users and perform queries. '
-    #         'Clients are the main type of user.'
-    #     )
-    # )
 
     is_verified = models.BooleanField(
         'verified',
