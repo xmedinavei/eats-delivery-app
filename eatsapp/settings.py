@@ -59,9 +59,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'eatsapp.urls'
 
-# Media
-MEDIA_ROOT = str(APPS_DIR('media'))
-MEDIA_URL = '/media/'
+# # Media
+# MEDIA_ROOT = str(APPS_DIR('media'))
+# MEDIA_URL = '/media/'
 
 # Templates
 TEMPLATES = [

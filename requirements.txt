@@ -1,2 +1,5 @@
 # Django
-django
+django>=3.0.10
+
+# Django REST Framework
+djangorestframework==3.11.0
