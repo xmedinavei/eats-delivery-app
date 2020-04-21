@@ -1,0 +1,36 @@
+'''Store model.'''
+
+# Django
+from django.db import models
+
+
+
+class Store:
+    '''Store model.
+
+    A profile holds a user's public data like biography, picture,
+    and statistics.
+    '''
+
+    user = models.OneToOneField('users.User', on_delete=models.CASCADE)
+
+
+    picture = models.ImageField(
+        'profile picture',
+        upload_to='users/pictures/',
+        blank=True,
+        null=True
+    )
+    
+    store_address = models.TextField(max_length=200, blank=True)
+
+    # Stats
+    orders_dispatched = models.PositiveIntegerField(default=0)
+    store_reputation = models.FloatField(
+        default=5.0,
+        help_text="Store's reputation based on client califications"
+    )
+
+    def __str__(self):
+        '''Return user's str representation.'''
+        return str(self.user)
