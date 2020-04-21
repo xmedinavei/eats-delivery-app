@@ -15,7 +15,9 @@ class Store(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    store_slug_name = models.SlugField(unique=True, max_length=40)
 
+    about = models.CharField('circle description', max_length=255)
     picture = models.ImageField(
         'profile picture',
         upload_to='users/stores/pictures/',

@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 # Models
-from users.models import User
+from users.models import User, Customer, Rider, Store
 
 
 class CustomUserAdmin(UserAdmin):
@@ -13,17 +13,47 @@ class CustomUserAdmin(UserAdmin):
 
     list_display = ('email', 'username', 'first_name',
                     'last_name', 'type_user')
-    list_filter = ('is_client', 'type_user')
+    list_filter = ('is_verified', 'type_user')
 
 
-# @admin.register(Customer)
-# class CustomerAdmin(admin.ModelAdmin):
-#     """Customer model admin."""
+@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    """Customer model admin."""
 
-#     list_display = ('user', 'reputation', 'rides_taken', 'rides_offered')
-#     search_fields = ('user__username', 'user__email',
-#                      'user__first_name', 'user__last_name')
-#     list_filter = ('reputation',)
+    list_display = ('user', 'delivery_address', 'orders_made')
+    search_fields = ('user__username', 'user__email',
+                     'user__first_name', 'user__last_name')
+    # list_filter = ('',)
 
 
-# admin.site.register(User, CustomUserAdmin)
+@admin.register(Store)
+class StoreAdmin(admin.ModelAdmin):
+    """Store model admin."""
+
+    list_display = (
+        'user', 'store_address',
+        'orders_dispatched', 'store_reputation'
+    )
+    search_fields = (
+        'user__username', 'user__email',
+        'user__first_name', 'user__last_name',
+    )
+    # list_filter = ('',)
+
+
+@admin.register(Rider)
+class RiderAdmin(admin.ModelAdmin):
+    """Rider model admin."""
+
+    list_display = (
+        'user', 'rider_address',
+        'orders_dispatched', 'rider_reputation', 'rider_vehicle_made', 
+        'rider_vehicle_model', 'rider_vehicle_licence_plate',
+    )
+    search_fields = (
+        'user__username', 'user__email',
+        'user__first_name', 'user__last_name',
+    )
+    # list_filter = ('',)
+
+admin.site.register(User, CustomUserAdmin)

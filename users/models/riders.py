@@ -16,8 +16,6 @@ class Rider(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    store_about = models.CharField(max_length=200)
-
     picture = models.ImageField(
         'profile picture',
         upload_to='users/riders/pictures/',
