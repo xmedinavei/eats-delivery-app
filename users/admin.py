@@ -48,7 +48,7 @@ class RiderAdmin(admin.ModelAdmin):
 
     list_display = (
         'user', 'rider_address',
-        'orders_dispatched', 'reputation', 'rider_vehicle_made',
+        'orders_dispatched', 'available','reputation', 'rider_vehicle_made',
         'rider_vehicle_model', 'rider_vehicle_licence_plate',
     )
     search_fields = (
@@ -56,6 +56,6 @@ class RiderAdmin(admin.ModelAdmin):
         'user__first_name', 'user__last_name',
         'rider_vehicle_licence_plate',
     )
-    # list_filter = ('',)
+    list_filter = ('available',)
 
 admin.site.register(User, CustomUserAdmin)

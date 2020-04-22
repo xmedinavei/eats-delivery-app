@@ -38,6 +38,10 @@ class Rider(models.Model):
     rider_address = models.TextField(max_length=200, blank=True)
 
     # Stats
+    available = models.BooleanField(
+        'is the rider available to deliver?',
+        default=True
+    )
     orders_dispatched = models.PositiveIntegerField(default=0)
     reputation = models.FloatField(
         default=5.0,
