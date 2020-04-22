@@ -3,7 +3,7 @@
 # Django
 from django.db import models
 
-# Local
+# Models
 from .users import User
 
 

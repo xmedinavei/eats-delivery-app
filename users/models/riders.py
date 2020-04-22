@@ -4,7 +4,7 @@
 from django.db import models
 from django.core.validators import RegexValidator
 
-# Local
+# Models
 from .users import User
 
 
@@ -39,7 +39,7 @@ class Rider(models.Model):
 
     # Stats
     orders_dispatched = models.PositiveIntegerField(default=0)
-    rider_reputation = models.FloatField(
+    reputation = models.FloatField(
         default=5.0,
         help_text="Rider's reputation based on client califications"
     )

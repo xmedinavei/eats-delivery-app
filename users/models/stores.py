@@ -3,7 +3,7 @@
 # Django
 from django.db import models
 
-# Local
+# Models
 from .users import User
 
 
@@ -15,7 +15,11 @@ class Store(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    store_slug_name = models.SlugField(unique=True, max_length=40)
+    name = models.CharField(max_length=120)
+    slugname = models.SlugField(
+        unique=True,
+        max_length=120,
+    )
 
     about = models.CharField('circle description', max_length=255)
     picture = models.ImageField(
@@ -25,15 +29,16 @@ class Store(models.Model):
         null=True
     )
     
-    store_address = models.TextField(max_length=200, blank=True)
+    pickup_address = models.TextField(max_length=200, blank=True)
 
     # Stats
     orders_dispatched = models.PositiveIntegerField(default=0)
-    store_reputation = models.FloatField(
+    reputation = models.FloatField(
         default=5.0,
         help_text="Store's reputation based on client califications"
     )
 
     def __str__(self):
         '''Return user's str representation.'''
-        return str(self.user)
+        return str(self.slugname)
+        

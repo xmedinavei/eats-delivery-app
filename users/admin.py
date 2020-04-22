@@ -31,12 +31,13 @@ class StoreAdmin(admin.ModelAdmin):
     """Store model admin."""
 
     list_display = (
-        'user', 'store_address',
-        'orders_dispatched', 'store_reputation'
+        'user', 'name', 'slugname', 'pickup_address',
+        'orders_dispatched', 'reputation'
     )
     search_fields = (
         'user__username', 'user__email',
         'user__first_name', 'user__last_name',
+        'name', 'slugname',
     )
     # list_filter = ('',)
 
@@ -47,12 +48,13 @@ class RiderAdmin(admin.ModelAdmin):
 
     list_display = (
         'user', 'rider_address',
-        'orders_dispatched', 'rider_reputation', 'rider_vehicle_made', 
+        'orders_dispatched', 'reputation', 'rider_vehicle_made',
         'rider_vehicle_model', 'rider_vehicle_licence_plate',
     )
     search_fields = (
         'user__username', 'user__email',
         'user__first_name', 'user__last_name',
+        'rider_vehicle_licence_plate',
     )
     # list_filter = ('',)
 

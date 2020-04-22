@@ -3,12 +3,23 @@
 # Django
 from django.db import models
 
-# Local
-from eatsapp_project.users.models import Store
+# Models
+from users.models import Store
 
 class Meal(models.Model):
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    meal_name = models.CharField()
+    '''Meals models.'''
+
+    store = models.ForeignKey(
+        Store, 
+        on_delete=models.CASCADE,
+        )
+    
+    name = models.CharField(max_length=120)
+    slugname = models.SlugField(
+        unique=True,
+        max_length=120,
+        )
+    description = models.TextField(max_length=300)
     price = models.DecimalField(
         'meal price',
         max_digits=5,
@@ -21,7 +32,18 @@ class Meal(models.Model):
         null=True,
         help_text="Price max up to $999.99"
     )
-    meal_rating = models.FloatField(
+
+    # Stats
+    rating = models.FloatField(
         default=5.0,
         help_text="Meal's rating based on client califications"
     )
+    
+    
+    class Meta:
+        ordering = ('slugname', )
+        verbose_name = 'meal'
+
+    def __str__(self):
+        return 'Meal  {}'.format(self.slugname)
+
