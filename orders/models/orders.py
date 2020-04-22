@@ -19,6 +19,15 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=True) # not added payments yet
 
+    picked_up = models.BooleanField(
+        'picked up by the rider',
+        default=False
+    )
+    deliveried = models.BooleanField(
+        'deliveried to customer',
+        default=False
+    )
+
 
     class Meta:
         ordering = ('-created',)
