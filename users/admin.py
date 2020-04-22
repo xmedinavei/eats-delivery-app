@@ -11,7 +11,7 @@ from users.models import User, Customer, Rider, Store
 class CustomUserAdmin(UserAdmin):
     """User model admin."""
 
-    list_display = ('email', 'username', 'first_name',
+    list_display = ('id','email', 'username', 'first_name',
                     'last_name', 'type_user')
     list_filter = ('is_verified', 'type_user')
 
@@ -48,13 +48,13 @@ class RiderAdmin(admin.ModelAdmin):
 
     list_display = (
         'user', 'rider_address',
-        'orders_dispatched', 'available','reputation', 'rider_vehicle_made',
-        'rider_vehicle_model', 'rider_vehicle_licence_plate',
+        'orders_dispatched', 'available','reputation', 'vehicle_made',
+        'vehicle_model', 'licence_plate',
     )
     search_fields = (
         'user__username', 'user__email',
         'user__first_name', 'user__last_name',
-        'rider_vehicle_licence_plate',
+        'licence_plate',
     )
     list_filter = ('available',)
 

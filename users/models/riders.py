@@ -24,24 +24,30 @@ class Rider(models.Model):
     )
 
     # Motorcicle
-    rider_vehicle_made = models.CharField(max_length=50)
-    rider_vehicle_model = models.CharField(max_length=50)
+    vehicle_made = models.CharField(max_length=50)
+    vehicle_model = models.CharField(max_length=50)
     # Regex validator for motorcicle licence plate
     licence_plate_regex = RegexValidator(
         regex=r'^\w{2}\d{3}\w$',
         message="Motorcicle  licence plate must be entered in the format: AA111A"
     )
-    rider_vehicle_licence_plate = models.CharField(
+    licence_plate = models.CharField(
         validators=[licence_plate_regex], max_length=6,
+        unique=True,
     )
 
     rider_address = models.TextField(max_length=200, blank=True)
 
-    # Stats
+    # Status
     available = models.BooleanField(
         'is the rider available to deliver?',
         default=True
     )
+    active = models.BooleanField(
+        'is an active',
+        default=True
+    )
+    # Stats
     orders_dispatched = models.PositiveIntegerField(default=0)
     reputation = models.FloatField(
         default=5.0,

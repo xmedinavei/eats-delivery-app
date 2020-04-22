@@ -19,7 +19,7 @@ class Meal(models.Model):
         unique=True,
         max_length=120,
         )
-    description = models.TextField(max_length=300)
+    description = models.TextField(max_length=300, blank=True)
     price = models.DecimalField(
         'meal price',
         max_digits=5,

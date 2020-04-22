@@ -147,3 +147,10 @@ meals/migrations/0002_meal_store.py
 orders/migrations/0001_initial.py
 orders/migrations/0002_order_customer.py
 meals/migrations/0001_initial.py
+data.txt
+meals/migrations/0003_auto_20200422_1820.py
+users/migrations/0003_auto_20200422_1820.py
+users/migrations/0002_auto_20200422_1801.py
+meals/migrations/0001_initial.py
+meals/migrations/0001_initial.py
+meals/migrations/0001_initial.py

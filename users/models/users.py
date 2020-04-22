@@ -34,7 +34,7 @@ class User(AbstractUser):
     # Kind of user
     CUSTOMER = 'CU'
     STORE = 'ST'
-    RIDER = 'RD'
+    RIDER = 'RI'
     ADMIN = 'AD'
     TYPE_USER_CHOICES = [
         (CUSTOMER, 'customer'),

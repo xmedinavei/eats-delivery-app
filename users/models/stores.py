@@ -21,7 +21,7 @@ class Store(models.Model):
         max_length=120,
     )
 
-    about = models.CharField('circle description', max_length=255)
+    about = models.CharField('circle description', max_length=255, blank=True)
     picture = models.ImageField(
         'profile picture',
         upload_to='users/stores/pictures/',

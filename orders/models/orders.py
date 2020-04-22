@@ -15,8 +15,6 @@ class Order(models.Model):
         Customer,
         on_delete=models.CASCADE
     )
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=True) # not added payments yet
 
     picked_up = models.BooleanField(
@@ -27,6 +25,8 @@ class Order(models.Model):
         'deliveried to customer',
         default=False
     )
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
 
     class Meta:
