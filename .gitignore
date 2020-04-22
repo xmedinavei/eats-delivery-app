@@ -139,3 +139,8 @@ dmypy.json
 
 /migrations/*
 !/migrations/__init__.py
+meals/migrations/0001_initial.py
+meals/migrations/0001_initial.py
+meals/migrations/0002_meal_store.py
+orders/migrations/0001_initial.py
+orders/migrations/0002_order_customer.py
