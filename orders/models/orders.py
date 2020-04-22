@@ -39,8 +39,8 @@ class OrderItem(models.Model):
     )
     quantity = models.PositiveIntegerField(default=1)
 
-    def __str__(self):
-        return 'Order Item id: {}'.format(self.id)
+    # def __str__(self):
+    #     return 'Order Item id: {}'.format(self.id)
 
     # def get_cost(self):
     #     return self.Meal.price * self.quantity
