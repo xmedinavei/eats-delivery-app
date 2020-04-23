@@ -14,8 +14,14 @@ class Rider(models.Model):
     Rider profile hold user's public data: picture and stats.
     '''
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_rider = models.BooleanField(default=True)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # is_rider = models.BooleanField(default=True)
+
+    # Auth to User will be implemented
+    #####################
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    ######################
 
     picture = models.ImageField(
         'profile picture',
@@ -62,4 +68,4 @@ class Rider(models.Model):
 
     def __str__(self):
         '''Return user's str representation.'''
-        return str(self.user)
+        return str(f'ID: {self.id}, first name: {self.first_name}, last_name: {self.last_name}')

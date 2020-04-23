@@ -13,8 +13,8 @@ class Store(models.Model):
     Store profile hold user's public data: picture and stats.
     '''
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_store = models.BooleanField(default=True)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # is_store = models.BooleanField(default=True)
 
     name = models.CharField(max_length=120)
     slugname = models.SlugField(

@@ -35,15 +35,17 @@ class StoreAdmin(admin.ModelAdmin):
     """Store model admin."""
 
     list_display = (
-        'id', 'user', 'name', 'slugname', 'pickup_address',
+        'id', 'name', 'slugname', 'pickup_address',
         'orders_dispatched', 'reputation'
     )
-    search_fields = (
-        'user__username', 'user__email',
-        'user__first_name', 'user__last_name',
-        'name', 'slugname',
-    )
+    # search_fields = (
+    #     'user__username', 'user__email',
+    #     'user__first_name', 'user__last_name',
+    #     'name', 'slugname',
+    # )
     # list_filter = ('',)
+
+    search_fields = ('name', 'slugname')
 
     ordering = ['-id']
 
@@ -53,15 +55,17 @@ class RiderAdmin(admin.ModelAdmin):
     """Rider model admin."""
 
     list_display = (
-        'id','user', 'rider_address',
-        'orders_dispatched', 'available','reputation', 'vehicle_made',
-        'vehicle_model', 'licence_plate',
+        'id', 'first_name', 'last_name', 'rider_address',
+        'orders_dispatched','reputation', 'vehicle_made',
+        'vehicle_model', 'licence_plate', 'available', 'active'
     )
-    search_fields = (
-        'user__username', 'user__email',
-        'user__first_name', 'user__last_name',
-        'licence_plate',
-    )
+    # search_fields = (
+    #     'user__username', 'user__email',
+    #     'user__first_name', 'user__last_name',
+    #     'licence_plate',
+    # )
+    search_fields = ('first_name', 'last_name', 'licence_plate')
+
     list_filter = ('available',)
 
     ordering = ['-id']
