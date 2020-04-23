@@ -59,6 +59,9 @@ class User(AbstractUser):
         help_text='Set to true when the user have verified its email address.'
     )
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         '''Return username.'''
         return self.username
