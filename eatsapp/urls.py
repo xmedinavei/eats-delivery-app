@@ -9,5 +9,5 @@ urlpatterns = [
     # Django admin
     path(settings.ADMIN_URL, admin.site.urls),
 
-#     path('', include(('users.urls', 'users'), namespace='users'))
+    path('', include(('users.urls', 'users'), namespace='users'))
 ]
