@@ -14,6 +14,7 @@ class Store(models.Model):
     '''
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_store = models.BooleanField(default=True)
 
     name = models.CharField(max_length=120)
     slugname = models.SlugField(

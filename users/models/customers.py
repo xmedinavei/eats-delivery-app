@@ -14,6 +14,7 @@ class Customer(models.Model):
     '''
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_customer = models.BooleanField(default=True)
 
     picture = models.ImageField(
         'profile picture',
