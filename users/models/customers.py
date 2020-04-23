@@ -27,6 +27,11 @@ class Customer(models.Model):
     # Stats
     orders_made = models.PositiveIntegerField(default=0)
 
+
+    class Meta:
+        ordering = ['-id']
+
+
     def __str__(self):
         '''Return user's str representation.'''
         return str(self.user)

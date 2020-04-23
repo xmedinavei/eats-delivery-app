@@ -54,6 +54,11 @@ class Rider(models.Model):
         help_text="Rider's reputation based on client califications"
     )
 
+
+    class Meta:
+        ordering = ['-id']
+
+
     def __str__(self):
         '''Return user's str representation.'''
         return str(self.user)

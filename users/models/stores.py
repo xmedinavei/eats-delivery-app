@@ -38,6 +38,11 @@ class Store(models.Model):
         help_text="Store's reputation based on client califications"
     )
 
+
+    class Meta:
+        ordering = ['-id']
+
+
     def __str__(self):
         '''Return user's str representation.'''
         return str(self.slugname)

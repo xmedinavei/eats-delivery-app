@@ -15,15 +15,19 @@ class CustomUserAdmin(UserAdmin):
                     'last_name', 'type_user')
     list_filter = ('is_verified', 'type_user')
 
+    ordering = ['-id']
+
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     """Customer model admin."""
 
-    list_display = ('user', 'delivery_address', 'orders_made')
+    list_display = ('id', 'user', 'delivery_address', 'orders_made')
     search_fields = ('user__username', 'user__email',
                      'user__first_name', 'user__last_name')
     # list_filter = ('',)
+
+    ordering = ['-id']
 
 
 @admin.register(Store)
@@ -31,7 +35,7 @@ class StoreAdmin(admin.ModelAdmin):
     """Store model admin."""
 
     list_display = (
-        'user', 'name', 'slugname', 'pickup_address',
+        'id', 'user', 'name', 'slugname', 'pickup_address',
         'orders_dispatched', 'reputation'
     )
     search_fields = (
@@ -41,13 +45,15 @@ class StoreAdmin(admin.ModelAdmin):
     )
     # list_filter = ('',)
 
+    ordering = ['-id']
+
 
 @admin.register(Rider)
 class RiderAdmin(admin.ModelAdmin):
     """Rider model admin."""
 
     list_display = (
-        'user', 'rider_address',
+        'id','user', 'rider_address',
         'orders_dispatched', 'available','reputation', 'vehicle_made',
         'vehicle_model', 'licence_plate',
     )
@@ -57,5 +63,7 @@ class RiderAdmin(admin.ModelAdmin):
         'licence_plate',
     )
     list_filter = ('available',)
+
+    ordering = ['-id']
 
 admin.site.register(User, CustomUserAdmin)
