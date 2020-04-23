@@ -154,3 +154,8 @@ users/migrations/0002_auto_20200422_1801.py
 meals/migrations/0001_initial.py
 meals/migrations/0001_initial.py
 meals/migrations/0001_initial.py
+meals/migrations/0001_initial.py
+meals/migrations/0001_initial.py
+meals/migrations/0002_meal_store.py
+orders/migrations/0001_initial.py
+orders/migrations/0002_auto_20200423_1710.py
