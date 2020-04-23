@@ -4,27 +4,23 @@
 from django.db import models
 
 # Models
-from users.models import Customer, Store
+from users.models import User, Customer, Store
 from meals.models import Meal
 
 
 class Order(models.Model):
     '''Orders models.'''
 
-    customer = models.ForeignKey(
-        Customer,
-        on_delete=models.CASCADE
-    )
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
+    store = models.ForeignKey('Store', on_delete=models.CASCADE)
+
     paid = models.BooleanField(default=True) # not added payments yet
 
-    picked_up = models.BooleanField(
-        'picked up by the rider',
-        default=False
-    )
-    deliveried = models.BooleanField(
-        'deliveried to customer',
-        default=False
-    )
+    # Status
+    picked_up = models.BooleanField('picked up by the rider', default=False)
+    deliveried = models.BooleanField('deliveried to customer', default=False)    )
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -38,14 +34,8 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(
-        Order,
-        on_delete=models.CASCADE
-    )
-    meal = models.ForeignKey(
-        Meal,
-        on_delete=models.CASCADE
-    )
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    meal = models.ForeignKey('Meal', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
 
     # def __str__(self):
