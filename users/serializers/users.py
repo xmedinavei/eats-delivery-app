@@ -98,7 +98,7 @@ class UserSignUpSerializer(serializers.Serializer):
     def create(self, data):
         '''handle user and customer creation.'''
         data.pop('password_confirmation')
-        user = User.objects.create(**data)
+        user = User.objects.create(**data, is_verified=False)
         Customer.objects.create(user=user)
         return user
 
@@ -120,6 +120,9 @@ class UserLoginSerializer(serializers.Serializer):
 
         if not user:
             raise serializers.ValidationError('Invalid credentials.')
+
+        if not user.is_verified:
+            raise serializers.ValidationError('User has not been verified')
 
         self.context['user'] = user
         return data
