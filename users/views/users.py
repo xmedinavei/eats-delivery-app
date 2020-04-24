@@ -9,7 +9,8 @@ from rest_framework.response import Response
 from users.serializers import (
     UserLoginSerializer,
     UserModelSerializer,
-    UserSignUpSerializer
+    UserSignUpSerializer,
+    AccountVerificationSerializer,
 )
 
 
@@ -38,3 +39,15 @@ class UserSignUpAPIView(APIView):
         user = serializer.save()
         data = UserModelSerializer(user).data
         return Response(data, status=status.HTTP_201_CREATED)
+
+
+class AccountVerificationAPIView(APIView):
+    '''Verify the token sent to email(by console) to confirm an account.'''
+
+    def post(self, request, *args, **kwargs):
+        '''Handle HTTP POST request.'''
+        serializer = AccountVerificationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        data = {'message': 'Your account is already verified!'}
+        return Response(data, status=status.HTTP_200_OK)

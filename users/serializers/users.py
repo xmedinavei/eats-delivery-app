@@ -1,10 +1,12 @@
 '''Users serializers.'''
 
 # Django
+from django.conf import settings
 from django.contrib.auth import password_validation, authenticate
 from django.core.validators import RegexValidator
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.utils import timezone
 
 # Django REST Framework
 from rest_framework import serializers
@@ -13,6 +15,10 @@ from rest_framework.validators import UniqueValidator
 
 # Models
 from users.models import User, Customer
+
+# Utilities
+import jwt
+from datetime import timedelta
 
 
 class UserModelSerializer(serializers.ModelSerializer):
@@ -121,12 +127,19 @@ class UserSignUpSerializer(serializers.Serializer):
         msg = EmailMultiAlternatives(subject, content, from_email, [to])
         msg.attach_alternative(content, "text/html")
         msg.send()
-        
+
 
     def gen_verification_token(self, user):
         '''Create JWT for the user, to verify the account.'''
-        return 'abc'
 
+        exp_date = timezone.now() + timedelta(days=3)
+        payload = {
+            'user': user.username,
+            'exp': int(exp_date.timestamp()),
+            'type': 'email_confirmation'
+        }
+        token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+        return token.decode()
 
 
 
@@ -157,5 +170,40 @@ class UserLoginSerializer(serializers.Serializer):
         '''Generate or retrieve token.'''
         token, created = Token.objects.get_or_create(user=self.context['user'])
         return self.context['user'], token.key
+
+
+class AccountVerificationSerializer(serializers.Serializer):
+    '''Account verification token serializer.'''
+
+    token = serializers.CharField()
+
+    def validate_token(self, data):
+        """Verify token is valid."""
+        try:
+            payload = jwt.decode(data, settings.SECRET_KEY,
+                                 algorithms=['HS256'])
+        # Validate that token has not been expired
+        except jwt.ExpiredSignatureError:
+            raise serializers.ValidationError('Verification link has expired.')
+        # Validate that we are receiving a token, not other string
+        except jwt.PyJWTError:
+            raise serializers.ValidationError('Invalid token')
+        # Validate that email was send by Eats App
+        if payload['type'] != 'email_confirmation':
+            raise serializers.ValidationError('Invalid token')
+
+        self.context['payload'] = payload
+        return data
+
+
+    def save(self):
+        """Update user to is_verified=True"""
+        payload = self.context['payload']
+        user = User.objects.get(username=payload['user'])
+        user.is_verified = True
+        user.save()
+
+
+
 
 

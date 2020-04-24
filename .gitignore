@@ -160,3 +160,6 @@ meals/migrations/0002_meal_store.py
 orders/migrations/0001_initial.py
 orders/migrations/0002_auto_20200423_1710.py
 users/migrations/0003_auto_20200424_0117.py
+orders/migrations/0002_auto_20200424_1734.py
+meals/migrations/0001_initial.py
+orders/migrations/0001_initial.py
