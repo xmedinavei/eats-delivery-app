@@ -11,6 +11,7 @@ from meals.models import Meal
 class Order(models.Model):
     '''Orders models.'''
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
 
@@ -20,6 +21,7 @@ class Order(models.Model):
     picked_up = models.BooleanField('picked up by the rider', default=False)
     deliveried = models.BooleanField('deliveried to customer', default=False)
     
+    # Stats
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -28,7 +30,7 @@ class Order(models.Model):
         ordering = ('-created',)
 
     def __str__(self):
-        return 'Order: {}'.format(self.id)
+        return 'Order: {} to {}'.format(self.id)
 
 
 
