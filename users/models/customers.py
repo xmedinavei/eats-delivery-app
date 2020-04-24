@@ -23,7 +23,7 @@ class Customer(models.Model):
         null=True
     )
 
-    delivery_address = models.TextField(max_length=200, blank=True)
+    delivery_address = models.CharField(max_length=250)
 
     # Stats
     orders_made = models.PositiveIntegerField(default=0)
