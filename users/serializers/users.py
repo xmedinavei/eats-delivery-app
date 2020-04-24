@@ -3,6 +3,8 @@
 # Django
 from django.contrib.auth import password_validation, authenticate
 from django.core.validators import RegexValidator
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 # Django REST Framework
 from rest_framework import serializers
@@ -78,8 +80,6 @@ class UserSignUpSerializer(serializers.Serializer):
     type_user = serializers.ChoiceField(choices=TYPE_USER_CHOICES, default=CUSTOMER,)
 
 
-
-
     def validate(self, data):
         '''Verify that passwords match'''
 
@@ -89,18 +89,44 @@ class UserSignUpSerializer(serializers.Serializer):
         if password != password_confirmation:
             raise serializers.ValidationError('Passwords do not match.')
         
-        # Django's vaaidation
+        # Django's validation
         password_validation.validate_password(password)
-
         return data
 
-    
+
     def create(self, data):
         '''handle user and customer creation.'''
+
         data.pop('password_confirmation')
         user = User.objects.create(**data, is_verified=False)
         Customer.objects.create(user=user)
+
+        self.send_confirmation_email(user)
         return user
+
+
+    def send_confirmation_email(self, user):
+        '''Send verification email to make user's account is_verfied=True'''
+
+        verification_token = self.gen_verification_token(user)
+
+        subject = f'Welcome @{user.username}! Verify you account'
+        from_email = 'Eats Delivery <noreply@eatsdelivery.com>'
+        to = user.email
+        content = render_to_string(
+            'emails/account_verification.html',
+            {'token': verification_token, 'user': user}
+        )
+
+        msg = EmailMultiAlternatives(subject, content, from_email, [to])
+        msg.attach_alternative(content, "text/html")
+        msg.send()
+        
+
+    def gen_verification_token(self, user):
+        '''Create JWT for the user, to verify the account.'''
+        return 'abc'
+
 
 
 
