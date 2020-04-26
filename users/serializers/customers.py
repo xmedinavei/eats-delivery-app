@@ -1,4 +1,4 @@
-"""Profile serializer."""
+"""Customer serializer."""
 
 # Django REST Framework
 from rest_framework import serializers
@@ -8,7 +8,8 @@ from users.models import Customer
 
 
 class CustomerModelSerializer(serializers.ModelSerializer):
-    """Customer model serializer."""
+    '''Customer model serializer.'''
+
 
     class Meta:
         """Meta class."""

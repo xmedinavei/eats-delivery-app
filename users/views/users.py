@@ -1,11 +1,13 @@
 '''Users views.'''
 
 # Django REST Framework
-from rest_framework.views import APIView
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+
+# Permissions
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from users.permissions import IsAccountOwner
 
 # Serializers
 from users.serializers import (
@@ -15,8 +17,6 @@ from users.serializers import (
     AccountVerificationSerializer,
     CustomerModelSerializer,
 )
-
-from users.permissions import IsAccountOwner
 
 # Models
 from users.models import User, Customer
@@ -28,10 +28,25 @@ class UserViewSet(mixins.RetrieveModelMixin,
                   viewsets.GenericViewSet):
     """User view set.
 
-    For sign up, login and account verification.
+    For sign up, login, account verification and update Customer data.
+
+
+    #################################################################################
+    Http methods and the URLs:
+
+    POST            /users/signup/                  (Verification token is sent to the terminal log)
+    POST            /users/verify/                  
+    POST            /users/login/
+    GET             /users/<username>/  *           (show User and Customer detail)
+    PUT or PATCH    /users/<username>/  *
+    PUT or PATCH    /users/<username>/customer/  *
+
+    * : access_token must be provided in the headers as: "Authorization: Token <acces_token>
+        access_token is provided in the login.
+    ######################################################################################
     """
 
-    queryset = User.objects.filter(is_verified=True, type_user='customer')
+    queryset = User.objects.filter(is_verified=True)
     serializer_class = UserModelSerializer
     lookup_field = 'username'
 
@@ -39,13 +54,14 @@ class UserViewSet(mixins.RetrieveModelMixin,
         """Assign permissions based on action."""
 
         if self.action in ['signup', 'login', 'verify']:
-            permissions = [AllowAny]  # No pide permisos
+            permissions = [AllowAny]
         elif self.action in ['retrieve', 'update', 'partial_update']:
             permissions = [IsAuthenticated, IsAccountOwner]
         else:
             permissions = [IsAuthenticated]
         return [permission() for permission in permissions]
 
+    # URL: users/login/
     @action(detail=False, methods=['post'])
     def login(self, request):
         """User sign in."""
@@ -60,6 +76,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
         return Response(data, status=status.HTTP_201_CREATED)
 
+    # URL: users/signup/
     @action(detail=False, methods=['post'])
     def signup(self, request):
         """User sign up."""
@@ -71,7 +88,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
         
         return Response(data, status=status.HTTP_201_CREATED)
         
-        
+    # URL: users/verify/
     @action(detail=False, methods=['post'])
     def verify(self, request):
         """Account verification."""
@@ -83,14 +100,17 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
         return Response(data, status=status.HTTP_200_OK)
 
-
+    # URL: users/<username>/customer/
+    # Token must be sent on the headers: "Authorization: Token <access_token>"
+    # <access_token> is given after login
     @action(detail=True, methods=['put', 'patch'])
     def customer(self, request, *args, **kwargs):
-        """Update customer data."""
+        """Update/partial update customer's data."""
 
         user = self.get_object()
         customer = user.customer
-        partial = request.method == 'PATCH'
+        # True if it's PATCH, False otherwise
+        partial = request.method == 'PATCH' 
         serializer = CustomerModelSerializer(
             customer,
             data=request.data,
@@ -108,11 +128,11 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
     #     response = super(UserViewSet, self).retrieve(request, *args, **kwargs)
     #     order_active = Orders.objects.filter(
-    #         owner=request.user,
+    #         customer=request.user.customer,
     #         order__is_deliveried=True
     #     )
     #     order_made= Orders.objects.filter(
-    #         owner=request.user,
+    #         customer=request.user.customer,
     #         order__is_deliveried=False
     #     )
     #     data = {
