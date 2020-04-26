@@ -11,9 +11,9 @@ from users.models import User, Customer, Rider, Store
 class CustomUserAdmin(UserAdmin):
     """User model admin."""
 
-    list_display = ('id','email', 'username', 'first_name',
-                    'last_name', 'type_user')
-    list_filter = ('is_verified', 'type_user')
+    list_display = ('id','email','password', 'username', 'first_name',
+                    'last_name', 'type_user', 'is_verified', 'type_user', 'is_active')
+    list_filter = ('is_verified', 'type_user', 'is_active')
 
     ordering = ['-id']
 
