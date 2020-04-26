@@ -104,7 +104,7 @@ class UserSignUpSerializer(serializers.Serializer):
         '''handle user and customer creation.'''
 
         data.pop('password_confirmation')
-        user = User.objects.create(**data, is_verified=False)
+        user = User.objects.create_user(**data, is_verified=False)
         Customer.objects.create(user=user)
 
         self.send_confirmation_email(user)
@@ -160,9 +160,10 @@ class UserLoginSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError('Invalid credentials.')
 
-        if not user.is_verified:
-            raise serializers.ValidationError('User has not been verified')
+        # if not user.is_verified:
+        #     raise serializers.ValidationError('User has not been verified')
 
+        import pdb; pdb.set_trace()
         self.context['user'] = user
         return data
 
