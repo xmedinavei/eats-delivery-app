@@ -154,22 +154,24 @@ class UserLoginSerializer(serializers.Serializer):
         )
 
     def validate(self, data):
-        '''Verify credentials.'''
+        """Check credentials."""
+        
         user = authenticate(username=data['email'], password=data['password'])
 
         if not user:
-            raise serializers.ValidationError('Invalid credentials.')
-
-        # if not user.is_verified:
-        #     raise serializers.ValidationError('User has not been verified')
-
-        import pdb; pdb.set_trace()
+            raise serializers.ValidationError('Invalid credentials')
+        
+        if not user.is_verified:
+            raise serializers.ValidationError('Account is not active yet :(')
+        
         self.context['user'] = user
+
         return data
 
     def create(self, data):
         '''Generate or retrieve token.'''
         token, created = Token.objects.get_or_create(user=self.context['user'])
+
         return self.context['user'], token.key
 
 

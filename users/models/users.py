@@ -59,6 +59,12 @@ class User(AbstractUser):
         help_text='Set to true when the user have verified its email address.'
     )
 
+    is_active = models.BooleanField(
+        'active or inactive account',
+        default=True,
+        help_text='Account acctive or inactive.'
+    )
+
     class Meta:
         ordering = ['-id']
 
