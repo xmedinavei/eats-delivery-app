@@ -37,6 +37,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
     def get_permissions(self):
         """Assign permissions based on action."""
+
         if self.action in ['signup', 'login', 'verify']:
             permissions = [AllowAny]  # No pide permisos
         elif self.action in ['retrieve', 'update', 'partial_update']:
@@ -48,6 +49,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
     @action(detail=False, methods=['post'])
     def login(self, request):
         """User sign in."""
+
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user, token = serializer.save()
@@ -85,6 +87,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
     @action(detail=True, methods=['put', 'patch'])
     def customer(self, request, *args, **kwargs):
         """Update customer data."""
+
         user = self.get_object()
         customer = user.customer
         partial = request.method == 'PATCH'
@@ -96,9 +99,10 @@ class UserViewSet(mixins.RetrieveModelMixin,
         serializer.is_valid(raise_exception=True)
         serializer.save()
         data = UserModelSerializer(user).data
+
         return Response(data)
 
-    # Show user orders 
+    # Show user's orders 
     # def retrieve(self, request, *args, **kwargs):
     #     """Add extra data to the response."""
 
