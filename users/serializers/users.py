@@ -104,7 +104,7 @@ class UserSignUpSerializer(serializers.Serializer):
         '''handle user and customer creation.'''
 
         data.pop('password_confirmation')
-        user = User.objects.create(**data, is_verified=False)
+        user = User.objects.create_user(**data, is_verified=False)
         Customer.objects.create(user=user)
 
         self.send_confirmation_email(user)
