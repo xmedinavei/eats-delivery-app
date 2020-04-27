@@ -4,9 +4,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
 
-# Models
-from .users import User
-
 
 class Rider(models.Model):
     '''Rider model.
@@ -17,7 +14,7 @@ class Rider(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE)
     # is_rider = models.BooleanField(default=True)
 
-    # Auth to User will be implemented
+    # Auth to Users will be implemented
     #####################
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -46,12 +43,12 @@ class Rider(models.Model):
     rider_address = models.TextField(max_length=200, blank=True)
 
     # Status
-    available = models.BooleanField(
-        'is the rider available to deliver?',
+    is_available = models.BooleanField(
+        'Is the rider available to deliver?',
         default=True
     )
-    active = models.BooleanField(
-        'is an active',
+    is_active = models.BooleanField(
+        'Is the account active?',
         default=True
     )
     # Stats
