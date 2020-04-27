@@ -3,9 +3,6 @@
 # Django
 from django.db import models
 
-# Models
-from .users import User
-
 
 class Store(models.Model):
     '''Store model.
