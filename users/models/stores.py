@@ -3,9 +3,6 @@
 # Django
 from django.db import models
 
-# Models
-from .users import User
-
 
 class Store(models.Model):
     '''Store model.
@@ -30,7 +27,19 @@ class Store(models.Model):
         null=True
     )
     
-    pickup_address = models.TextField(max_length=200, blank=True)
+    pickup_address = models.TextField(max_length=200)
+
+    # Status
+    is_active = models.BooleanField(
+        'active or inactive account',
+        default=True,
+        help_text='Account acctive or inactive.'
+    )
+    is_open = models.BooleanField(
+        'Store working or not',
+        default=True,
+        help_text='Store working or close'
+    )
 
     # Stats
     orders_dispatched = models.PositiveIntegerField(default=0)
