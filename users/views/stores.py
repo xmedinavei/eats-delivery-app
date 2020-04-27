@@ -29,9 +29,9 @@ class StoreViewSet(mixins.CreateModelMixin,
     '''
 
     serializer_class = StoreModelSerializer
-    lookup_field = 'slugname'
+    lookup_field = 'store_slugname'
 
-    search_fields = ('slug_name', 'name')
+    search_fields = ('store_slugname', 'name')
     # It will be implemented
     # ordering = () # Ordering by distance to customer
     filter_fields = ('is_active', 'is_open')
