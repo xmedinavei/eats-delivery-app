@@ -36,16 +36,12 @@ class StoreAdmin(admin.ModelAdmin):
 
     list_display = (
         'id', 'name', 'slugname', 'pickup_address',
-        'orders_dispatched', 'reputation'
-    )
-    # search_fields = (
-    #     'user__username', 'user__email',
-    #     'user__first_name', 'user__last_name',
-    #     'name', 'slugname',
-    # )
-    # list_filter = ('',)
+        'is_active', 'is_open',
+        'orders_dispatched', 'reputation')
 
-    search_fields = ('name', 'slugname')
+    list_filter = ('is_active','is_open')
+
+    search_fields = ('id', 'name', 'slugname')
 
     ordering = ['-id']
 
