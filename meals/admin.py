@@ -13,9 +13,10 @@ class MealAdmin(admin.ModelAdmin):
     """Meal model admin."""
 
     list_display = (
-        'store', 'name', 'slugname', 'price', 'rating'
+        'store', 'name', 'slugname', 'price', 'rating', 'is_available'
     )
     search_fields = (
-        'slugname', 'slugname',
-                     )
+        'slugname', 'store__store_slugname',
+    )
+    list_filter = ('is_available',)
 

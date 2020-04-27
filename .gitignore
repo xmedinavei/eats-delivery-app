@@ -170,3 +170,5 @@ orders/migrations/0001_initial.py
 users/migrations/0002_auto_20200427_1538.py
 users/migrations/0003_auto_20200427_1605.py
 users/migrations/0004_auto_20200427_1651.py
+orders/migrations/0001_initial.py
+orders/migrations/0002_auto_20200427_1940.py

@@ -55,5 +55,5 @@ class Store(models.Model):
 
     def __str__(self):
         '''Return user's str representation.'''
-        return str(self.slugname)
+        return str(self.store_slugname)
         
