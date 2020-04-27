@@ -16,6 +16,9 @@ from rest_framework.validators import UniqueValidator
 # Models
 from users.models import User, Customer
 
+# Serializers 
+from users.serializers.customers import CustomerModelSerializer
+
 # Utilities
 import jwt
 from datetime import timedelta
@@ -23,6 +26,8 @@ from datetime import timedelta
 
 class UserModelSerializer(serializers.ModelSerializer):
     '''User model serializer.'''
+
+    customer = CustomerModelSerializer(read_only=True)
 
     class Meta:
         '''Meta class.'''
@@ -33,7 +38,8 @@ class UserModelSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'email',
-            'phone_number'
+            'phone_number',
+            'customer'
         )
         # fields = '__all__'
 
