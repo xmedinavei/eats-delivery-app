@@ -1,4 +1,4 @@
-'''Stores views.'''
+'''Riders views.'''
 
 # Django REST Framework
 from rest_framework import mixins, status, viewsets
@@ -16,7 +16,7 @@ class RiderViewSet(mixins.CreateModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.ListModelMixin,
                     viewsets.GenericViewSet):
-    '''Stores view set.
+    '''Riders view set.
     
     #################################################################################
     Http methods and the URLs:

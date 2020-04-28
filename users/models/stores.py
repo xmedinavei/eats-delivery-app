@@ -14,7 +14,7 @@ class Store(models.Model):
     # is_store = models.BooleanField(default=True)
 
     name = models.CharField(max_length=120)
-    slugname = models.SlugField(
+    store_slugname = models.SlugField(
         unique=True,
         max_length=120,
     )
@@ -55,5 +55,5 @@ class Store(models.Model):
 
     def __str__(self):
         '''Return user's str representation.'''
-        return str(self.slugname)
+        return str(self.store_slugname)
         

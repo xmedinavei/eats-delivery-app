@@ -33,6 +33,13 @@ class Meal(models.Model):
         help_text="Price max up to $999.99"
     )
 
+    # Status
+    is_available = models.BooleanField(
+        'Meal available in menu',
+        default=True,
+        help_text='Show is the items is available for customers'
+    )
+
     # Stats
     rating = models.FloatField(
         default=5.0,

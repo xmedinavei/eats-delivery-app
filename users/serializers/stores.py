@@ -17,7 +17,7 @@ class StoreModelSerializer(serializers.ModelSerializer):
         model = Store
         fields = (
             'name',
-            'slugname',
+            'store_slugname',
             'about',
             'picture',
             'pickup_address',

@@ -34,12 +34,12 @@ class StoreAdmin(admin.ModelAdmin):
     """Store model admin."""
 
     list_display = (
-        'id', 'name', 'slugname', 'pickup_address',
+        'id', 'name', 'store_slugname', 'pickup_address',
         'is_active', 'is_open',
         'orders_dispatched', 'reputation'
     )
     list_filter = ('is_active','is_open')
-    search_fields = ('id', 'name', 'slugname')
+    search_fields = ('id', 'name', 'store_slugname')
     ordering = ['-id']
 
 
