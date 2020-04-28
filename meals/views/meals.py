@@ -60,15 +60,27 @@ class MealViewSet(mixins.ListModelMixin,
     def create(self, request, *args, **kwargs):
         '''Assign Meal to a Store (received in the URL input <store_slugname>)
         '''
-        store_slugname = kwargs['store_slugname']
-        store = Store.objects.get(store_slugname=store_slugname)
-        request.data['store'] = store['pk']
+        store = self.store # Got from the dispatcher
+        request.data['store'] = store
         serializer = MealModelSerializer(
+            store,
             data=request.data
         )
         # import pdb; pdb.set_trace()
         serializer.is_valid(raise_exception=True)
-        meal = serializer.save()
-
-        data = self.get_serializer(meal).data
+        serializer.save()
+        data = serializer.data
         return Response(data, status=status.HTTP_201_CREATED)
+
+
+
+
+
+
+
+      
+      
+        # store_slugname = kwargs['store_slugname']
+        # store = Store.objects.get(store_slugname=store_slugname)
+        # request.data['store'] = store['pk']
+        
