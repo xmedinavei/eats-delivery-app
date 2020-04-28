@@ -51,17 +51,3 @@ class Order(models.Model):
         )
 
 
-
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
-
-    def __str__(self):
-        return 'Order Item id: {} name: {}'.format(
-            self.id,
-            self.meal.name
-        )
-
-    # def get_cost(self):
-    #     return self.Meal.price * self.quantity
