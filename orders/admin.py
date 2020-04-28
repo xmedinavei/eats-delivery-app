@@ -13,7 +13,7 @@ class OrderAdmin(admin.ModelAdmin):
     """Order model admin."""
 
     list_display = (
-        'customer', 'paid', 'picked_up', 'deliveried'
+        'id', 'customer', 'paid', 'picked_up', 'deliveried'
     )
     search_fields = (
         'id',
