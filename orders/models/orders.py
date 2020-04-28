@@ -18,19 +18,33 @@ class Order(models.Model):
     paid = models.BooleanField(default=True) # not added payments yet
 
     # Status
-    picked_up = models.BooleanField('picked up by the rider', default=False)
-    deliveried = models.BooleanField('deliveried to customer', default=False)
+    ordered= models.BooleanField(
+        'Order made',
+        default=False,
+        help_text='Set True when the Customer wants the order to be delivered.'
+    )
+    picked_up = models.BooleanField(
+        'picked up by the rider',
+        default=False,
+        help_text='Set True when the rider has picked up the order on the Store.'
+    )
+    deliveried = models.BooleanField(
+        'deliveried to customer',
+        default=False,
+        help_text='Set True when the Customer has received the order.'
+    )
     
     # Stats
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
 
+
     class Meta:
         ordering = ('-created',)
 
     def __str__(self):
-        return 'Order: {} to {}'.format(self.id)
+        return 'Order: {}'.format(self.id)
 
 
 
