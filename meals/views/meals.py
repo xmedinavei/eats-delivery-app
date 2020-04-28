@@ -1,4 +1,4 @@
-'''Stores views.'''
+'''Meal views.'''
 
 # Django REST Framework
 from rest_framework import mixins, status, viewsets
@@ -17,6 +17,7 @@ from users.models import Store
 
 class MealViewSet(mixins.ListModelMixin,
                     mixins.CreateModelMixin,
+                    mixins.UpdateModelMixin,
                     mixins.RetrieveModelMixin,
                     mixins.DestroyModelMixin,
                     viewsets.GenericViewSet):
@@ -25,10 +26,8 @@ class MealViewSet(mixins.ListModelMixin,
     #################################################################################
     Http methods and the URLs:
 
-    GET             /stores/                        (list Stores)
-    POST            /stores/                        (create Store)
-    PUT             /stores/                        (update Store info)
-    PATCH           /stores/                        (partial update Store info)
+    GET             /stores/<store_slugname>/meals/         (list Store meals)
+    POST            /stores/<store_slugname>/meals/         (create Stores meal)
     ######################################################################################
     '''
 
@@ -61,26 +60,12 @@ class MealViewSet(mixins.ListModelMixin,
         '''Assign Meal to a Store (received in the URL input <store_slugname>)
         '''
         store = self.store # Got from the dispatcher
-        request.data['store'] = store
+        request.data['store'] = store.id
         serializer = MealModelSerializer(
-            store,
             data=request.data
         )
-        # import pdb; pdb.set_trace()
         serializer.is_valid(raise_exception=True)
         serializer.save()
         data = serializer.data
+
         return Response(data, status=status.HTTP_201_CREATED)
-
-
-
-
-
-
-
-      
-      
-        # store_slugname = kwargs['store_slugname']
-        # store = Store.objects.get(store_slugname=store_slugname)
-        # request.data['store'] = store['pk']
-        
