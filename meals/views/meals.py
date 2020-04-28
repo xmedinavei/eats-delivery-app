@@ -61,9 +61,8 @@ class MealViewSet(mixins.ListModelMixin,
         '''Assign Meal to a Store (received in the URL input <store_slugname>)
         '''
         store = self.store # Got from the dispatcher
-        request.data['store'] = store
+        request.data['store'] = store.id
         serializer = MealModelSerializer(
-            store,
             data=request.data
         )
         # import pdb; pdb.set_trace()
