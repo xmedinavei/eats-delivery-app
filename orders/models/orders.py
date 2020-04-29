@@ -50,4 +50,3 @@ class Order(models.Model):
             self.user.username
         )
 
-
