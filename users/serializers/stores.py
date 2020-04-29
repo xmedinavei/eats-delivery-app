@@ -25,6 +25,7 @@ class StoreModelSerializer(serializers.ModelSerializer):
             'reputation'
         )
         read_only_fields = (
+            'id',
             'orders_dispatched',
             'reputation'
         )
