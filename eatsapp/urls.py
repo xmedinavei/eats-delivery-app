@@ -10,5 +10,6 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
 
     path('', include(('users.urls', 'users'), namespace='users')),
-    path('', include(('meals.urls', 'meals'), namespace='meals'))
+    path('', include(('meals.urls', 'meals'), namespace='meals')),
+    path('', include(('orders.urls', 'orders'), namespace='orders'))
 ]

@@ -25,12 +25,12 @@ class OrderViewSet(mixins.ListModelMixin,
                     viewsets.GenericViewSet):
     '''Order view set.
     
-    #################################################################################
+    ############################################################################################################################
     Http methods and the URLs:
 
-    GET             /users/<username>/stores/<store_slugname>/orders/           (list)
-    POST            /users/<username>/stores/<store_slugname>/orders/           (create)
-    ######################################################################################
+    GET             /users/<username>/stores/<store_slugname>/orders/           (list Customer's order from a Store)
+    POST            /users/<username>/stores/<store_slugname>/orders/           (create) # DO NOT SEND DATA TO CREATE AN ORDER
+    #############################################################################################################################
     '''
 
     serializer_class = OrderModelSerializer
@@ -45,7 +45,7 @@ class OrderViewSet(mixins.ListModelMixin,
 
         username = kwargs['username']
         store_slugname = kwargs['store_slugname']
-        self.username = get_object_or_404(User, username=username)
+        self.user = get_object_or_404(User, username=username)
         self.store = get_object_or_404(Store, store_slugname=store_slugname)
 
         return super(OrderViewSet, self).dispatch(request, *args, **kwargs)
@@ -55,20 +55,21 @@ class OrderViewSet(mixins.ListModelMixin,
         '''Get Store's available meals'''
 
         return Order.objects.filter(
-            user=self.user.username,
-            store=self.store
+            user=self.user.id,
+            store=self.store.id
         )
 
     def create(self, request, *args, **kwargs):
         '''Create an order.'''
 
-        request.data['user'] = self.user.username
+        request.data['user'] = self.user.id
         request.data['customer'] = self.user.customer.id
         request.data['store'] = self.store.id
 
         serializer = OrderModelSerializer(
             data=request.data
         )
+        serializer.is_valid()
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)

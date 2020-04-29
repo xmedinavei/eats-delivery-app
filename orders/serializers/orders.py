@@ -19,10 +19,12 @@ class OrderModelSerializer(serializers.ModelSerializer):
 
         model = Order
         fields = (
+            'id',
             'user',
             'customer',
             'store',
             'paid',
+            'ordered',
             'picked_up',
             'deliveried',
             'created',
