@@ -1,86 +1,82 @@
-# '''Order items views.'''
+'''Order items views.'''
 
-# # Django REST Framework
-# from rest_framework import mixins, status, viewsets
-# from rest_framework.decorators import action
-# from rest_framework.response import Response
-# from rest_framework.generics import get_object_or_404
+# Django REST Framework
+from rest_framework import mixins, status, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.generics import get_object_or_404
 
-# # Serializers
-# from order.serializers import OrderItemModelSerializer
+# Serializers
+from orders.serializers import OrderItemModelSerializer
 
-# #  Models
-# from orders.models import Order
-# from users.models import User
-# from users.models import Customer
-# from users.models import Store
-# from meals.models import Meal
+#  Models
+from orders.models import Order
+from users.models import User
+from users.models import Customer
+from users.models import Store
+from meals.models import Meal
 
 
 
-# class OrderItemViewSet(mixins.ListModelMixin,
-#                     mixins.CreateModelMixin,
-#                     mixins.UpdateModelMixin,
-#                     mixins.RetrieveModelMixin,
-#                     mixins.DestroyModelMixin,
-#                     viewsets.GenericViewSet):
-#     '''Order item view set.
+class OrderItemViewSet(mixins.ListModelMixin,
+                    mixins.CreateModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.DestroyModelMixin,
+                    viewsets.GenericViewSet):
+    '''Order item view set.
     
-#     #################################################################################
-#     Http methods and the URLs:
+    #####################################################################################################################################
+    Http methods and the URLs:
 
-#     GET             /users/(<username>/customer/orders/         (list )
-#     POST            /users/(<username>/customer/orders          (create)
-#     ######################################################################################
-#     '''
+    POST        users/<username>/stores/<store_slugname>/orders/<uid>/meal/<slugname>/       (Insert Meal into an existing User's Order )
+    #####################################################################################################################################
+    '''
 
-#     serializer_class = OrderItemModelSerializer
-#     lookup_field = 'id'
-#     search_fields = ('id', 'meal.name')
-
-
-#     # Method call every time this MealViewSet is instanced
-#     def dispatch(self, request, *args, **kwargs):
-#         '''Add the username, store and meal to the attributes.
-#         Got from the URL input.
-#         '''
-
-#         username = kwargs['username']
-#         store_slugname = kwargs['store_slugname']
-#         slugname = kwargs['slugname']
-#         self.username = get_object_or_404(User, username=username)
-#         self.store = get_object_or_404(Store, store_slugname=store_slugname)
-#         self.meal = get_object_or_404(Meal, slugname=slugname)
-
-#         return super(OrderItemViewSet, self).dispatch(request, *args, **kwargs)
+    serializer_class = OrderItemModelSerializer
+    lookup_field = 'id'
+    search_fields = ('id', 'meal.name')
 
 
-#     def get_queryset(self):
-#         '''Get Store's available meals'''
+    # Method call every time this MealViewSet is instanced
+    def dispatch(self, request, *args, **kwargs):
+        '''Add the username, store, order and meal to the attributes.
+        Got from the URL input.
+        '''
 
-#         return Meal.objects.filter(
-#             store=self.store,
-#             slugname=self.meal.slugname
-#             is_available=True
-#         )
-    
-    # def perform_create(self, serializer):
-    #     '''Create an order item of an order.'''
+        username = kwargs['username']
+        store_slugname = kwargs['store_slugname']
+        uid = kwargs['uid']
+        slugname = kwargs['slugname']
+        self.user = get_object_or_404(User, username=username)
+        self.store = get_object_or_404(Store, store_slugname=store_slugname)
+        self.order = get_object_or_404(Order, id=uid)
+        self.meal = get_object_or_404(Meal, slugname=slugname)
+
+        return super(OrderItemViewSet, self).dispatch(request, *args, **kwargs)
 
 
+    def get_queryset(self):
+        '''Get User's Order'''
+        # MODIFY LSIT AND DELETE 
 
+        return Order.objects.filter(
+            id=self.order.id,
+            user=self.user.id,
+            store=self.store.id,
+            ordered=False
+        )
 
+    def create(self, request, *args, **kwargs):
+        '''Add an order_item (meal) of an Order.'''
 
+        request.data['order'] = self.order.id
+        request.data['meal'] = self.meal.id
 
+        serializer = OrderItemModelSerializer(
+            data=request.data
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-    # def create(self, request, *args, **kwargs):
-    #     store = self.store # Got from the dispatcher
-    #     request.data['store'] = store.id
-    #     serializer = OrderItemModelSerializer(
-    #         data=request.data
-    #     )
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-    #     data = serializer.data
-
-    #     return Response(data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

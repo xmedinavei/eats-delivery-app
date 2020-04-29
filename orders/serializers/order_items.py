@@ -20,4 +20,4 @@ class OrderItemModelSerializer(serializers.ModelSerializer):
             'meal',
             'quantity'
         )
-        read_only_fields = ('id')
+        read_only_fields = ('id',)
