@@ -34,9 +34,9 @@ class UserViewSet(mixins.RetrieveModelMixin,
     #################################################################################
     Http methods and the URLs:
 
-    POST            /users/signup/                  (Verification token is sent to the terminal log)
-    POST            /users/verify/                  
-    POST            /users/login/
+    POST            /users/signup/                  (After signup, token is sent to the terminal as emailconfirmation)
+    POST            /users/verify/                  (Sent the token as data to verify the account)
+    POST            /users/login/                   (After login, access_token is provided)
     GET             /users/<username>/  *           (show User and Customer detail)
     PUT or PATCH    /users/<username>/  *
     PUT or PATCH    /users/<username>/customer/  *
