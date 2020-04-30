@@ -98,9 +98,17 @@ class OrderViewSet(mixins.ListModelMixin,
         rider_id = rider_available.id
         rider_instance = Rider.objects.get(id=rider_id)
 
-        # Order: Add Rider and set ordered=True
+        # Order: add Rider & ordered=True
         order.rider = rider_instance
         order.ordered = True
+
+        # Rider stats
+        rider_instance.orders_active += 1
+
+        # Rider status
+        if rider_instance.orders_active == 2:
+            rider_instance.is_available = False
+
         data = OrderModelSerializer(order).data
 
         return Response(data, status=status.HTTP_200_OK)

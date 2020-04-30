@@ -4,9 +4,12 @@
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.generics import get_object_or_404
+
 
 # Serializers
 from users.serializers import RiderModelSerializer
+from orders.serializers import OrderModelSerializer
 
 # Models
 from users.models import Rider
@@ -25,6 +28,7 @@ class RiderViewSet(mixins.CreateModelMixin,
     POST            /riders/                        (create Rider)
     PUT             /riders/                        (update Rider info)
     PATCH           /riders/                        (partial Rider Store info)
+    GET             /riders/<id>/orders/            (show orders to pickup)
     ######################################################################################
     '''
 
@@ -57,3 +61,17 @@ class RiderViewSet(mixins.CreateModelMixin,
             
         return queryset
     
+
+    @action(detail=True, methods=['GET'])
+    def orders(self, request, *args, **kwargs):
+        '''Show orders assign to the Rider.'''
+        
+        rider = get_object_or_404(Rider, id=kwargs['uid'])
+        orders_assigned = (
+            rider.order_set.all()
+                .filter(picked_up=False)
+                .filter(deliveried=False)
+        ) 
+        data = OrderModelSerializer(orders_assigned).data
+
+        return Response(data, status=status.HTTP_200_OK)
