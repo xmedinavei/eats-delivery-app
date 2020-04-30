@@ -4,25 +4,24 @@
 from rest_framework import serializers
 
 # Models
-from orders.models import Order
+from orders.models import Order, OrderItem
 
 
 class OrderModelSerializer(serializers.ModelSerializer):
     '''Order model serializer.'''
-
-    # user = UserModelSerializer()
-    # customer = CustomerModelSerializer()
-    # store = StoreModelserializer()
 
     class Meta:
         """Meta class."""
 
         model = Order
         fields = (
+            'id',
             'user',
             'customer',
             'store',
+            'rider',
             'paid',
+            'ordered',
             'picked_up',
             'deliveried',
             'created',
