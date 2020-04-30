@@ -23,7 +23,7 @@ Stores viewset
     POST            /stores/                        (create Store)
     PUT             /stores/                        (update Store info)
     PATCH           /stores/                        (partial update Store info
-    GET            /stores/<id>/orders/             (show Orders not pickup yet)
+    GET             /stores/<id>/orders/            (show Orders not pickup yet)
 ########################################################################################################################################
 
 Riders viewset
