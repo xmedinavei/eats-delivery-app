@@ -65,13 +65,15 @@ class RiderViewSet(mixins.CreateModelMixin,
     @action(detail=True, methods=['GET'])
     def orders(self, request, *args, **kwargs):
         '''Show orders assign to the Rider.'''
-        
-        rider = get_object_or_404(Rider, id=kwargs['uid'])
+        rider = get_object_or_404(Rider, id=kwargs['slugname']) # Don't know why appears slugnmame in kwargs. There's no slugname in models even
         orders_assigned = (
             rider.order_set.all()
                 .filter(picked_up=False)
                 .filter(deliveried=False)
         ) 
-        data = OrderModelSerializer(orders_assigned).data
+        # import pdb; pdb.set_trace()
+        n = len(orders_assigned)
+        for i in range(n):
+            data = OrderModelSerializer(orders_assigned[i]).data
 
         return Response(data, status=status.HTTP_200_OK)
