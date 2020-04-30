@@ -16,6 +16,7 @@ class StoreModelSerializer(serializers.ModelSerializer):
 
         model = Store
         fields = (
+            'id',
             'name',
             'store_slugname',
             'about',
