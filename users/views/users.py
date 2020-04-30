@@ -22,7 +22,6 @@ from users.serializers import (
 from users.models import User, Customer
 
 
-
 class UserViewSet(mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
                   viewsets.GenericViewSet):
@@ -121,24 +120,3 @@ class UserViewSet(mixins.RetrieveModelMixin,
         data = UserModelSerializer(user).data
 
         return Response(data)
-
-    # Show user's orders 
-    # def retrieve(self, request, *args, **kwargs):
-    #     """Add extra data to the response."""
-
-    #     response = super(UserViewSet, self).retrieve(request, *args, **kwargs)
-    #     order_active = Orders.objects.filter(
-    #         customer=request.user.customer,
-    #         order__is_deliveried=True
-    #     )
-    #     order_made= Orders.objects.filter(
-    #         customer=request.user.customer,
-    #         order__is_deliveried=False
-    #     )
-    #     data = {
-    #         'user': response.data,
-    #         'order_active': OrderModelSerializer(order_active, many=True).data,
-    #         'order_made': OrderModelSerializer(order_made, many=True).data
-    #     }
-    #     response.data = data
-    #     return response

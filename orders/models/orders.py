@@ -4,7 +4,7 @@
 from django.db import models
 
 # Models
-from users.models import User, Customer, Store
+from users.models import User, Customer, Store, Rider
 from meals.models import Meal
 
 
@@ -14,6 +14,14 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
+
+    # It will be assigned to the Order instance when the customer make the order
+    rider = models.ForeignKey(
+        Rider,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     paid = models.BooleanField(default=True) # not added payments yet
 

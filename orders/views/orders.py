@@ -11,9 +11,7 @@ from orders.serializers import OrderModelSerializer
 
 #  Models
 from orders.models import Order
-from users.models import User
-from users.models import Customer
-from users.models import Store
+from users.models import User, Customer, Store, Rider
 
 
 
@@ -28,8 +26,9 @@ class OrderViewSet(mixins.ListModelMixin,
     ############################################################################################################################
     Http methods and the URLs:
 
-    GET             /users/<username>/stores/<store_slugname>/orders/           (list Customer's order from a Store)
-    POST            /users/<username>/stores/<store_slugname>/orders/           (create) # DO NOT SEND DATA TO CREATE AN ORDER
+    GET         /users/<username>/stores/<store_slugname>/orders/                   (list Customer's order from a Store)
+    POST        /users/<username>/stores/<store_slugname>/orders/                   (create) # DO NOT SEND DATA TO CREATE AN ORDER
+    POST        /users/<username>/stores/<store_slugname>/orders/<id>/make_order/   (make order and assign a Rider)
     #############################################################################################################################
     '''
 
@@ -59,6 +58,14 @@ class OrderViewSet(mixins.ListModelMixin,
             store=self.store.id
         )
 
+    def get_object(self):
+        """Return the Order objects from get_queryset."""
+        return get_object_or_404(
+            Order,
+            user=self.user.id,
+            store=self.store.id
+        )
+
     def create(self, request, *args, **kwargs):
         '''Create an order.'''
 
@@ -73,3 +80,27 @@ class OrderViewSet(mixins.ListModelMixin,
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+    @action(detail=True, methods=['POST'])
+    def make_order(self, request, *args, **kwargs):
+        
+        order = get_object_or_404(
+            Order,
+            id=kwargs['id'],
+            user=self.user.id,
+            store=self.store.id
+        )
+
+        # Assign Rider
+        query_riders = Rider.objects.filter(is_active=True).filter(is_available=True)
+        rider_available = query_riders.first()
+        rider_id = rider_available.id
+        rider_instance = Rider.objects.get(id=rider_id)
+
+        # Order: Add Rider and set ordered=True
+        order.rider = rider_instance
+        order.ordered = True
+        data = OrderModelSerializer(order).data
+
+        return Response(data, status=status.HTTP_200_OK)
