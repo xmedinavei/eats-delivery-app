@@ -40,17 +40,25 @@ class Rider(models.Model):
         unique=True,
     )
 
-    rider_address = models.TextField(max_length=200, blank=True)
+    location = models.TextField(max_length=200, blank=True)
 
     # Status
+    orders_active = models.SmallIntegerField(
+        '# orders assigned to delivery',
+        default=0,
+        help_text="Number of orders assigned to deliver."
+    )
     is_available = models.BooleanField(
         'Is the rider available to deliver?',
-        default=True
+        default=True,
+        help_text="When orders_active==2, this set to False."
     )
     is_active = models.BooleanField(
         'Is the account active?',
-        default=True
+        default=True,
+        help_text="True: account active. False: inactive."
     )
+
     # Stats
     orders_dispatched = models.PositiveIntegerField(default=0)
     reputation = models.FloatField(

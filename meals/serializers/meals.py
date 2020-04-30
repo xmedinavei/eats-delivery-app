@@ -20,6 +20,7 @@ class MealModelSerializer(serializers.ModelSerializer):
 
         model = Meal
         fields = (
+            'id',
             'store',
             'name',
             'slugname',
@@ -29,5 +30,6 @@ class MealModelSerializer(serializers.ModelSerializer):
             'rating'
         )
         read_only_fields = (
+            'id',
             'rating',
         )

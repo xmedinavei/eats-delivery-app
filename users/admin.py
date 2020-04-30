@@ -48,13 +48,13 @@ class RiderAdmin(admin.ModelAdmin):
     """Rider model admin."""
 
     list_display = (
-        'id', 'first_name', 'last_name', 'rider_address',
+        'id', 'first_name', 'last_name', 'location',
         'orders_dispatched','reputation', 'vehicle_made',
-        'vehicle_model', 'licence_plate', 'is_available',
-        'is_active'
+        'vehicle_model', 'licence_plate', 'orders_active', 'is_available',
+        'is_active', 'orders_dispatched', 'reputation'
     )
-    search_fields = ('first_name', 'last_name', 'licence_plate')
-    list_filter = ('is_active', 'is_available')
+    search_fields = ('id', 'first_name', 'last_name', 'licence_plate')
+    list_filter = ('orders_active', 'is_active', 'is_available')
     ordering = ['-id']
 
 
