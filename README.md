@@ -16,10 +16,10 @@ eats-delivery is a personal project, it's a REST API of restaurants delivery mad
 > for programing purposes,
 > not for production.
 
-# URL paths
+## URL paths
 All urls path are on the eatsapp/urls.py documentation. Besides, they are on every views module documentation too.
 
-### Installation
+## Installation
 
 eats-delivery requires [Django](https://www.djangoproject.com/download/) v3+ to run.
 
