@@ -1,7 +1,7 @@
 # eats-delivery
 
 
-eats-delivery is a personal project, it's a REST API of deliveries for restaurants made using Django and Django REST frameworks as a tools for its development.
+eats-delivery is a personal project, it's a REST API of restaurants delivery made using Django and Django REST frameworks as a tools for its development.
 
 # Programing skills used in the project
 
